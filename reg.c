@@ -5,7 +5,9 @@
 #include <stdlib.h>
 #include <string.h>
 #include <time.h>
+#ifndef NO_UNISTD
 #include <unistd.h>
+#endif
 #include "roff.h"
 
 #define NENVS		64	/* number of environment registers */

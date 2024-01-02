@@ -1,0 +1,84 @@
+!IFNDEF _NMAKE_ROFF_INCLUDED
+_NMAKE_ROFF_INCLUDED=1
+
+!IFNDEF O
+O=obj
+!ENDIF
+!IFNDEF S
+S=.
+!ENDIF
+
+# FDIR = default font installation directory
+!IFNDEF FDIR
+FDIR = ./font
+!MESSAGE Default font directory set to $(FDIR)
+!MESSAGE [Change from default to suit your installation]
+!ENDIF
+
+# MDIR = default macro installation directory
+!IFNDEF MDIR
+MDIR = ./tmac
+!MESSAGE Default macro directory set to $(MDIR)
+!MESSAGE [Change from default to suit your installation]
+!ENDIF
+
+CC = cl
+CFLAGS = /nologo /O2 "/DTROFFFDIR=\"$(FDIR)\"" "/DTROFFMDIR=\"$(MDIR)\"" /D_CRT_SECURE_NO_WARNINGS
+LDFLAGS = /nologo
+OBJS = $O\roff.obj $O\dev.obj $O\font.obj $O\in.obj $O\cp.obj $O\tr.obj $O\ren.obj $O\out.obj \
+    $O\reg.obj $O\sbuf.obj $O\fmt.obj $O\eval.obj $O\draw.obj $O\wb.obj $O\hyph.obj $O\map.obj \
+    $O\clr.obj $O\char.obj $O\dict.obj $O\iset.obj $O\dir.obj
+
+all:: roff.exe
+roff.exe: $(OBJS)
+	$(CC) /Fe:$@ $(OBJS) $(LDFLAGS)
+clean::
+	-del /Q $(OBJS) roff.exe
+
+#
+$O:
+    if not exist $O mkdir $O
+$O/roff.obj: $O $S/roff.c
+	$(CC) /c /Fo:$@ $(CFLAGS) $S/$(@B).c
+$O/dev.obj: $S/dev.c
+	$(CC) /c /Fo:$@ $(CFLAGS) $S/$(@B).c
+$O/font.obj: $S/font.c
+	$(CC) /c /Fo:$@ $(CFLAGS) $S/$(@B).c
+$O/in.obj: $S/in.c
+	$(CC) /c /Fo:$@ $(CFLAGS) $S/$(@B).c
+$O/cp.obj: $S/cp.c
+	$(CC) /c /Fo:$@ $(CFLAGS) $S/$(@B).c
+$O/tr.obj: $S/tr.c
+	$(CC) /c /Fo:$@ $(CFLAGS) $S/$(@B).c
+$O/ren.obj: $S/ren.c
+	$(CC) /c /Fo:$@ $(CFLAGS) $S/$(@B).c
+$O/out.obj: $S/out.c
+	$(CC) /c /Fo:$@ $(CFLAGS) $S/$(@B).c
+$O/reg.obj: $S/reg.c
+	$(CC) /c /Fo:$@ $(CFLAGS) /DNO_UNISTD $S/$(@B).c
+$O/sbuf.obj: $S/sbuf.c
+	$(CC) /c /Fo:$@ $(CFLAGS) $S/$(@B).c
+$O/fmt.obj: $S/fmt.c
+	$(CC) /c /Fo:$@ $(CFLAGS) $S/$(@B).c
+$O/eval.obj: $S/eval.c
+	$(CC) /c /Fo:$@ $(CFLAGS) $S/$(@B).c
+$O/draw.obj: $S/draw.c
+	$(CC) /c /Fo:$@ $(CFLAGS) $S/$(@B).c
+$O/wb.obj: $S/wb.c
+	$(CC) /c /Fo:$@ $(CFLAGS) $S/$(@B).c
+$O/hyph.obj: $S/hyph.c
+	$(CC) /c /Fo:$@ $(CFLAGS) $S/$(@B).c
+$O/map.obj: $S/map.c
+	$(CC) /c /Fo:$@ $(CFLAGS) $S/$(@B).c
+$O/clr.obj: $S/clr.c
+	$(CC) /c /Fo:$@ $(CFLAGS) $S/$(@B).c
+$O/char.obj: $S/char.c
+	$(CC) /c /Fo:$@ $(CFLAGS) $S/$(@B).c
+$O/dict.obj: $S/dict.c
+	$(CC) /c /Fo:$@ $(CFLAGS) $S/$(@B).c
+$O/iset.obj: $S/iset.c
+	$(CC) /c /Fo:$@ $(CFLAGS) $S/$(@B).c
+$O/dir.obj: $S/dir.c
+	$(CC) /c /Fo:$@ $(CFLAGS) $S/$(@B).c
+
+!ENDIF
